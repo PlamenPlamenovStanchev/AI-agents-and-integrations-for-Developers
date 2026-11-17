@@ -1,0 +1,100 @@
+SECTION 1: SYSTEM ARCHITECTURE AND CORE SPECIFICATIONS
+1.1 Hardware Overview
+The Aether-Net 9000 (Model: AN-9K) is an autonomous industrial logistics unit designed for high-density warehouse environments. The chassis is constructed from a proprietary aluminum-titanium alloy, designated as Ti-Al-44, which provides a 30% increase in structural rigidity compared to standard grade 2 titanium.
+
+Dimensions: 1.2m x 0.8m x 1.1m
+
+Net Weight: 158.5 kg
+
+Maximum Payload Capacity: 450 kg
+
+Processor: Dual-core Octa-Threaded Quantum-Ready Silicon (QRS-1)
+
+1.2 Drive System
+The AN-9K utilizes a Quad-Directional Mecanum Wheel system, allowing for 360-degree holonomic movement. Each wheel is powered by an independent brushless DC motor (BLDC-400) capable of producing 45 Nm of torque. The maximum operational speed is governed by the firmware at 2.2 meters per second.
+
+SECTION 2: POWER MANAGEMENT AND BATTERY LOGISTICS
+2.1 Battery Chemistry
+The unit is powered by a Solid-State Lithium-Sulfur (Li-S) battery pack. Unlike traditional Li-ion batteries, the Li-S pack is non-flammable and operates optimally between 15В°C and 45В°C.
+
+Capacity: 120 Ah / 5.8 kWh
+
+Nominal Operating Voltage: 48.6 V
+
+Critical Low Voltage (CLV): 39.2 V
+
+2.2 Charging Protocols
+The AN-9K supports "Inductive Warp-Charge" technology.
+
+Stage 1 (Rapid): 0% to 80% in 18 minutes.
+
+Stage 2 (Trickle): 81% to 100% in 45 minutes.
+
+Critical Threshold: At 9% battery, the robot triggers the "Primary Return" (PR) sequence.
+
+Emergency Shutdown: At 3% battery, the robot enters "Deep-Sleep" and locks the mechanical brakes (Type-B Brakes).
+
+SECTION 3: SENSORS AND NAVIGATION (THE V-SLAM SUITE)
+3.1 LiDAR and Vision
+The robot navigates using the Argus-Eyes V4 sensor array. This includes:
+
+Two 360-degree LiDAR sensors (Model: L-X10) mounted on the top-left and bottom-right corners.
+
+Four Depth-Sensing Infrared Cameras (DS-IR-22) for floor-level obstacle detection. The software merges these inputs into a Unified Spatial Map (USM).
+
+3.2 Obstacle Avoidance Codes
+When the robot encounters an object, it assigns a priority level:
+
+Code GREEN: Stationary object, static map update.
+
+Code YELLOW: Moving object (human/other robot), predictive pathing engaged.
+
+Code RED: Immediate collision risk, 0.2s emergency braking.
+
+SECTION 4: ERROR CODES AND TROUBLESHOOTING
+4.1 Fatal System Errors
+If a fatal error occurs, the LED ring on the robot will pulse Red and display a code on the auxiliary OLED screen.
+
+Error 0x001: IMU Calibration Mismatch. Solution: Perform a "Static Reset" on level ground.
+
+Error 0x044: Thermal Overload in Motor Controller 3. Solution: Inspect for tangled debris in the rear-left wheel.
+
+Error 0x999: Encryption Handshake Failure. Solution: Re-sync the security dongle with the Ground Control Station.
+
+4.2 Maintenance Log Codes
+ML-10: Squeegee/Brush replacement required.
+
+ML-25: Firmware Checksum mismatch detected during boot.
+
+ML-90: Full structural integrity scan required (due every 1,000 operational hours).
+
+SECTION 5: SAFETY AND COMPLIANCE (OSHA & ISO)
+5.1 Human Interaction
+The AN-9K is ISO 13849-1 compliant. It maintains a "Safety Buffer Zone" of 1.5 meters. If a human enters this zone, the robot reduces speed to 0.5 m/s. If the human enters the "Immediate Proximity Zone" (0.5m), the robot ceases all movement and sounds a 90dB alarm.
+
+5.2 Environmental Constraints
+The robot is rated IP67 for water and dust resistance. However, it is not certified for use in:
+
+High-radiation environments (Zone-X).
+
+Temperatures exceeding 60В°C.
+
+Inclines steeper than 12 degrees.
+
+SECTION 6: SOFTWARE AND CONNECTIVITY
+6.1 Data Uplink
+Telemetry is transmitted via 5G-SA (Standalone) or local Wi-Fi 7.
+
+Default Port: 8080
+
+Secure Tunnel: TLS 1.3
+
+API Key Location: Stored in the /etc/auth/keys.json file on the internal SSD.
+
+6.2 Manual Override
+In case of software lockout, use the physical Master Key (MK-7). Insert it into the service port located under the rear chassis plate and turn 90 degrees clockwise. This bypasses the electronic lock and allows the robot to be pushed manually.
+
+SECTION 7: WARRANTY AND LEGAL
+This unit is under a 36-month limited warranty provided by Aether-Robotics Corp.
+
+Void Clauses: Use of non-certified lubricants (must use Lube-44-X), opening the battery compartment without an Authorized Service Token (AST), or operating in a Red Zone without a permit.
